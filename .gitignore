@@ -1,0 +1,7 @@
+.DS_Store
+.babelrc
+/Docs/
+dist/
+node_modules/
+src/
+webpack.config.js
