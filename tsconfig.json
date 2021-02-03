@@ -5,7 +5,8 @@
         "jsx": "react",
         "resolveJsonModule": true,
         "target": "ES6",
-        "module": "CommonJs"
+        "module": "CommonJs",
+        "outDir": "out"
     },
     "allowSyntheticDefaultImports": true,
     "include": [

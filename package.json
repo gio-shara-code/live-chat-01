@@ -6,7 +6,7 @@
   "scripts": {
     "server": "ts-node ./server/server.ts",
     "dev": "webpack serve",
-    "start": "node ./server/server.ts"
+    "start": "node ./out/server.js"
   },
   "keywords": [],
   "author": "",
