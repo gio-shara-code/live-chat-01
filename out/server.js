@@ -68,7 +68,6 @@ io.on('connection', (socket) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 let port = process.env.PORT;
 if (port == null || port == "") {
-    port = '8001';
+    port = '8002';
 }
-app.listen(port);
 nodejsServer.listen(port, () => console.log(`Server is running on the port 3000!`));
