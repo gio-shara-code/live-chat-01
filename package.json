@@ -8,6 +8,7 @@
     "dev": "webpack serve",
     "start": "node ./server/server.ts"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
