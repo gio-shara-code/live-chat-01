@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Lato&display=swap');
+
+.ChatBubbleConnectionStatus{
+    display: flex;
+    flex-flow: row;
+    align-items: flex-end;
+    font-size: 24px;
+}
+
+.Connect{
+    color: green;
+}
+
+.Disconnect {
+    color: red;
+}
+
+.From {
+    margin-right: 5px;
+    color: black;
+    font-family: 'Hachi Maru Pop', cursive;
+}

@@ -1,0 +1,11 @@
+.ParticipantBuilder {
+    width: 20%;
+    border-left: 1px solid #ccc;
+    padding: 0 2px;
+}
+
+@media only screen and (max-width: 415px) {
+    .ParticipantBuilder{
+        display: none;
+    }
+}

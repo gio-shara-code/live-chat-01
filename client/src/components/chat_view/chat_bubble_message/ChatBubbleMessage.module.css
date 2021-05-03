@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Lato&display=swap');
+
+/* This is the parent div of message and nickname*/
+.ChatBubble {
+    display: flex;
+    flex-flow: column;
+    margin: 5px;
+}
+
+/* The nickname above the message */
+.From{
+    width: fit-content;
+    font-family: 'Hachi Maru Pop', cursive;
+}
+
+/* This is the message itself */
+.Content{
+    padding: 8px;
+    border-radius: 0 15px 15px 15px;
+    width: fit-content;
+    color: #222;
+    background-color: #f2dcbb;
+    font-size: 18px;
+    max-width: 30%;
+    word-wrap: break-word;
+}
+
+.ItsMeChatBubble{
+    align-items: flex-end;
+}
+
+.ItsMeContent{
+    border-radius: 15px 0px 15px 15px;
+    color: #f2dcbb;
+    background-color: #222;
+}

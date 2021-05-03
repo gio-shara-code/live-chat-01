@@ -1,0 +1,16 @@
+.ChatView {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.MenuIcon{
+    display: none;
+    padding: 5px;
+}
+
+@media only screen and (max-width: 415px) {
+    .MenuIcon{
+        display: flex;
+    }
+}

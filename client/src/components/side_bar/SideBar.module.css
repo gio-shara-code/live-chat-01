@@ -1,0 +1,21 @@
+.SideBar{
+    display: none;
+    flex-flow: column;
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    background-color: grey;
+}
+
+
+@media only screen and (max-width: 415px) {
+    .SideBar{
+        display: none;
+    }
+}
+
+.Visible {
+    display: flex;
+}
