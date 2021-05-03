@@ -1,4 +1,4 @@
-# Crush-It
+# Live Chat
 
 This is a repo for Live Char which contains **server-side code** and **client-side** code.
 
@@ -6,7 +6,6 @@ This is a repo for Live Char which contains **server-side code** and **client-si
 * [Project Description](#project-description)
 * [Technologies](#technologies)
 * [Setup](#setup)
-* [App Screenshots](#app-screenshots)
 
 
 ## Project Description
