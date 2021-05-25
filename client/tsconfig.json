@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "lib": ["DOM"],
+      "esModuleInterop": true,
+      "jsx": "react",
+      "resolveJsonModule": true,
+      "target": "ES6",
+      "module": "CommonJs",
+      "outDir": "dist"
+    },
+    "allowSyntheticDefaultImports": true,
+    "include": ["src/**/*"]
+  }
+  

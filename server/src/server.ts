@@ -7,7 +7,11 @@ import { generateRandomMessageId } from "./services/messages";
 
 const app = express();
 const nodejsServer = http.createServer(app);
+app.use(express.static("public"));
 
+app.get("/", (req, res) => {
+  res.sendFile("index.html");
+});
 // const db = mongodbClient.db() //db name optional because you passed it in connect function
 // const usersCollection = db.collection('users')
 // const changeStream: mongodb.ChangeStream<any> = usersCollection.watch([], { })
@@ -22,7 +26,6 @@ let users: User[] = [];
 
 //connect is a default event which will be fired when the socket connection is established
 io.on("connection", async (socket: Socket) => {
-  console.log("New connection");
   if (!socket.handshake.auth.nickname && !socket.handshake.auth._id) return;
   const currentUser: User = {
     nickname: socket.handshake.auth.nickname,

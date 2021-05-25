@@ -13,7 +13,8 @@ export default function Chat(props: { nickName: string }) {
 
   const [socket, _] = useState(
     (): SocketIOClient.Socket => {
-      const socket = io("http://localhost:3000", {
+      const socket = io("https://super-live-chat.herokuapp.com/", {
+        transports: ["websocket"],
         auth: {
           _id: `${user._id}`,
           nickname: `${user.nickname}`,

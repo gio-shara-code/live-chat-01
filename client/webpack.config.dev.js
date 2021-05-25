@@ -25,6 +25,8 @@ module.exports = {
   },
   resolve: { extensions: [".ts", ".tsx", ".css", ".js"] },
   plugins: [
-    new HtmlWebpackPlugin({ filename: "index.html", title: "Live Chat 02" }),
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
   ],
 };
