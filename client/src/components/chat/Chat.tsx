@@ -1,37 +1,31 @@
-import React, { useState } from "react";
-import ChatBuilder from "../../containers/chat_builder/ChatBuilder";
-import ParticipantBuilder from "../../containers/participant_builder/ParticipantBuilder";
-import Row100x100 from "../row_100x100/Row100x100";
-import io from "socket.io-client";
-import { User } from "../../models";
+import React, {useState, useEffect} from "react"
+import ChatBuilder from "../../containers/chat_builder/ChatBuilder"
+import ParticipantBuilder from "../../containers/participant_builder/ParticipantBuilder"
+import Row100x100 from "../row_100x100/Row100x100"
+import {User} from "../../models"
+import {v4} from "uuid"
+import {socketConnection} from "./utils"
 
-export default function Chat(props: { nickName: string }) {
+export default function Chat(props: {nickName: string}) {
   const user: User = {
-    _id: `${props.nickName || "Demo"}?/?${Math.random()}`,
-    nickname: `${props.nickName || "Demo"}`,
-  };
+    _id: `${v4()}`,
+    nickname: `${props.nickName || "Demo"}`
+  }
 
-  const [socket, _] = useState(
-    (): SocketIOClient.Socket => {
-      const socket = io("https://super-live-chat.herokuapp.com/", {
-        transports: ["websocket"],
-        auth: {
-          _id: `${user._id}`,
-          nickname: `${user.nickname}`,
-        },
-      });
+  useEffect(() => {
+    setSocket(socketConnection(user))
+  }, [])
 
-      window.addEventListener("beforeunload", () => {
-        socket.disconnect();
-      });
-      return socket;
-    }
-  );
+  const [socket, setSocket] = useState<SocketIOClient.Socket>()
+
+  if (!socket) {
+    return <div>Loading...</div>
+  }
 
   return (
     <Row100x100>
       <ChatBuilder user={user} socket={socket} />
       <ParticipantBuilder socket={socket} />
     </Row100x100>
-  );
+  )
 }

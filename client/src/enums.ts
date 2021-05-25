@@ -1,5 +1,5 @@
- enum PageType {
-    NickNamePage,
-    ChatPage
+enum PageType {
+  NickNamePage,
+  ChatPage,
 }
-export default PageType
+export default PageType;
