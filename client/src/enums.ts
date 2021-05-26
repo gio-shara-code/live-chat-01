@@ -1,5 +1,10 @@
 enum PageType {
   NickNamePage,
-  ChatPage,
+  ChatPage
 }
-export default PageType;
+
+enum Format {
+  valid,
+  notValid
+}
+export {PageType, Format}

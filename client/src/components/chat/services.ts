@@ -2,7 +2,7 @@ import {User} from "../../models"
 import io from "socket.io-client"
 
 export const socketConnection = (user: User): SocketIOClient.Socket => {
-  const config = {
+  const config = { 
     transports: ["websocket"],
     auth: {
       _id: `${user._id}`,
@@ -10,7 +10,7 @@ export const socketConnection = (user: User): SocketIOClient.Socket => {
     }
   }
 
-  const socket = io("http://localhost:3000", config)
+  const socket = io("https://super-live-chat.herokuapp.com/", config)
 
   window.addEventListener("beforeunload", () => {
     socket.disconnect()

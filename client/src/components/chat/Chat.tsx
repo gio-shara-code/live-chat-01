@@ -1,17 +1,15 @@
 import React, {useState, useEffect} from "react"
 import ChatBuilder from "../../containers/chat_builder/ChatBuilder"
 import ParticipantBuilder from "../../containers/participant_builder/ParticipantBuilder"
-import Row100x100 from "../row_100x100/Row100x100"
 import {User} from "../../models"
-import {v4} from "uuid"
-import {socketConnection} from "./utils"
+import {socketConnection} from "./services"
+import styles from "./Chat.module.scss"
 
-export default function Chat(props: {nickName: string}) {
-  const user: User = {
-    _id: `${v4()}`,
-    nickname: `${props.nickName || "Demo"}`
-  }
+interface Props {
+  user: User
+}
 
+const chat: React.FC<Props> = ({user}) => {
   useEffect(() => {
     setSocket(socketConnection(user))
   }, [])
@@ -23,9 +21,11 @@ export default function Chat(props: {nickName: string}) {
   }
 
   return (
-    <Row100x100>
+    <div className={styles.chat}>
       <ChatBuilder user={user} socket={socket} />
       <ParticipantBuilder socket={socket} />
-    </Row100x100>
+    </div>
   )
 }
+
+export default chat

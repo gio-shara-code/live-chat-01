@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './ChatBubbleMessage.module.css'
-import { getChatTimestamp } from '../../../utils/date_format'
+import { getChatTimestamp } from '../../../../utils/date_format'
 export default function ChatBubble(props: {
     from: string,
     content: string,

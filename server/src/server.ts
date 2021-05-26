@@ -1,20 +1,18 @@
 import http from "http";
 import express from "express";
 import { Socket, Server } from "socket.io";
-import { User, Message } from "./models";
+import { User, Message } from "./interfaces";
 import { deleteUserFromList } from "./services/users";
 import { generateRandomMessageId } from "./services/messages";
+import { isHandShakeAuthNotValid } from "./utils/validation";
 
 const app = express();
 const nodejsServer = http.createServer(app);
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  res.sendFile("index.html");
+  res.sendFile("index.html"); 
 });
-// const db = mongodbClient.db() //db name optional because you passed it in connect function
-// const usersCollection = db.collection('users')
-// const changeStream: mongodb.ChangeStream<any> = usersCollection.watch([], { })
 
 const io = new Server(nodejsServer, {
   cors: {
@@ -24,33 +22,38 @@ const io = new Server(nodejsServer, {
 
 let users: User[] = [];
 
-//connect is a default event which will be fired when the socket connection is established
 io.on("connection", async (socket: Socket) => {
-  if (!socket.handshake.auth.nickname && !socket.handshake.auth._id) return;
+  if (isHandShakeAuthNotValid(socket.handshake.auth as User)) return;
+
   const currentUser: User = {
     nickname: socket.handshake.auth.nickname,
     _id: socket.handshake.auth._id,
   };
+
   users.push(currentUser);
+
   //Client connects...
   socket.broadcast.emit("client_on_participant_list", users);
   socket.emit("client_on_participant_list", users);
+
   const msgConnection: Message = {
     content: "has been connected!",
-    from: currentUser.nickname,
+    fromId: currentUser._id,
     timestamp: Date.now(),
     id: generateRandomMessageId(),
     type: "connect",
   };
+
   socket.broadcast.emit("client_on_message", msgConnection);
 
   socket.on("disconnecting", (reason) => {
     //Client disconnects....
+
     users = [...deleteUserFromList(users, currentUser._id)];
     socket.broadcast.emit("client_on_participant_list", users); //Send to everyone but the user
     const msgDisconnection: Message = {
       content: "has been disconnected!",
-      from: currentUser.nickname,
+      fromId: currentUser._id,
       timestamp: Date.now(),
       id: generateRandomMessageId(),
       type: "disconnect",

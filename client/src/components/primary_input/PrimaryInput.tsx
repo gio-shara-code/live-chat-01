@@ -1,14 +1,27 @@
-import React from 'react'
-import styles from './PrimaryInput.module.css'
-export default function PrimaryInput(props: {
-    placeholder: string, 
-    onKeyPress(e): void,
-    value: string,
-    onChange(e): void}) {
-    return ( <input className={styles.PrimaryInput} 
-        placeholder={props.placeholder} 
-        type="text"
-        onKeyPress={props.onKeyPress}
-        value={props.value}
-        onChange={props.onChange}/> )
+import React from "react"
+import styles from "./PrimaryInput.module.css"
+
+interface Props {
+  placeholder: string
+  onKeyPress(e): void
+  value: string
+  onChange(e): void
 }
+
+const primaryInput = React.forwardRef<HTMLInputElement, Props>(
+  ({onChange, placeholder, onKeyPress, value}, ref: any) => {
+    return (
+      <input
+        ref={ref}
+        className={styles.PrimaryInput}
+        placeholder={placeholder}
+        type="text"
+        onKeyPress={onKeyPress}
+        value={value}
+        onChange={onChange}
+      />
+    )
+  }
+)
+
+export default primaryInput

@@ -1,8 +1,5 @@
-import { User } from "../models";
+import { User } from "../interfaces";
 
-export function deleteUserFromList(users: User[], currentUserId: string){
-    const tempUsers = [...users]
-    const index = users.findIndex(user => user._id === currentUserId)
-    tempUsers.splice(index, 1)
-    return tempUsers
-} 
+export function deleteUserFromList(users: User[], currentUserId: string) {
+  return users.filter((user) => user._id !== currentUserId);
+}

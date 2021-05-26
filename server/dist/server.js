@@ -17,24 +17,21 @@ const express_1 = __importDefault(require("express"));
 const socket_io_1 = require("socket.io");
 const users_1 = require("./services/users");
 const messages_1 = require("./services/messages");
+const validation_1 = require("./utils/validation");
 const app = express_1.default();
 const nodejsServer = http_1.default.createServer(app);
 app.use(express_1.default.static("public"));
 app.get("/", (req, res) => {
     res.sendFile("index.html");
 });
-// const db = mongodbClient.db() //db name optional because you passed it in connect function
-// const usersCollection = db.collection('users')
-// const changeStream: mongodb.ChangeStream<any> = usersCollection.watch([], { })
 const io = new socket_io_1.Server(nodejsServer, {
     cors: {
         origin: "*",
     },
 });
 let users = [];
-//connect is a default event which will be fired when the socket connection is established
 io.on("connection", (socket) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!socket.handshake.auth.nickname && !socket.handshake.auth._id)
+    if (validation_1.isHandShakeAuthNotValid(socket.handshake.auth))
         return;
     const currentUser = {
         nickname: socket.handshake.auth.nickname,
@@ -46,7 +43,7 @@ io.on("connection", (socket) => __awaiter(void 0, void 0, void 0, function* () {
     socket.emit("client_on_participant_list", users);
     const msgConnection = {
         content: "has been connected!",
-        from: currentUser.nickname,
+        fromId: currentUser._id,
         timestamp: Date.now(),
         id: messages_1.generateRandomMessageId(),
         type: "connect",
@@ -58,7 +55,7 @@ io.on("connection", (socket) => __awaiter(void 0, void 0, void 0, function* () {
         socket.broadcast.emit("client_on_participant_list", users); //Send to everyone but the user
         const msgDisconnection = {
             content: "has been disconnected!",
-            from: currentUser.nickname,
+            fromId: currentUser._id,
             timestamp: Date.now(),
             id: messages_1.generateRandomMessageId(),
             type: "disconnect",

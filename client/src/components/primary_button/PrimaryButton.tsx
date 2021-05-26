@@ -1,5 +1,16 @@
-import React from 'react'
-import styles from './PrimaryButton.module.css'
-export default function PrimaryButton(props) {
-    return (<button onClick={props.onClick} className={styles.PrimaryButton}>{props.children}</button>)
+import React from "react"
+import styles from "./PrimaryButton.module.css"
+
+interface Props {
+  onClick(e?): void
 }
+
+const primaryButton: React.FC<Props> = ({onClick, children}) => {
+  return (
+    <button onClick={onClick} className={styles.PrimaryButton}>
+      {children}
+    </button>
+  )
+}
+
+export default primaryButton

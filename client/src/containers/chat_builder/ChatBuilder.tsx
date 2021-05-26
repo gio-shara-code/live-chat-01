@@ -1,45 +1,53 @@
-import React, { useEffect, useState } from "react";
-import styles from "./ChatBuilder.module.css";
-import ChatView from "../../components/chat_view/ChatView";
-import { User, Message } from "../../models";
-import ChatInput from "../../components/chat/chat_input/ChatInput";
+import React, {useEffect, useState, useRef} from "react"
+import styles from "./ChatBuilder.module.css"
+import ChatView from "../../components/chat_view/ChatView"
+import {User, Message} from "../../models"
+import ChatInput from "../../components/chat/chat_input/ChatInput"
+import {v4} from "uuid"
+import {isMessageValid} from "../../utils/validation"
 
-export default function ChatBuilder(props: {
-  socket: SocketIOClient.Socket;
-  user: User;
-}) {
+interface Props {
+  socket: SocketIOClient.Socket
+  user: User
+}
+
+const chatBuilder: React.FC<Props> = ({socket, user}) => {
+  const chatInputEl = useRef<HTMLInputElement>(null)
+
   useEffect(() => {
-    const chatInput = document.getElementById("chat_input");
-    chatInput.focus();
-  }, []);
+    chatInputEl.current.focus()
+  }, [])
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("")
 
-  function onKeyPressed(e: React.KeyboardEvent<any>) {
+  const onKeyPressed = (e: React.KeyboardEvent<any>) => {
     if (e.code === "Enter") {
-      if (message.trim().length !== 0) {
+      if (isMessageValid(message)) {
         const msg: Message = {
-          from: props.user.nickname,
+          fromId: user._id,
           content: message,
           timestamp: Date.now(),
-          id: `${Math.random()}?_?${Math.random()}`,
-          type: "message",
-        };
-        props.socket.emit("server_on_message", msg);
+          id: v4(),
+          type: "message"
+        }
+        socket.emit("server_on_message", msg)
       }
-      setMessage("");
+      setMessage("")
     }
   }
 
   return (
     <div className={styles.ChatBuilder}>
-      <ChatView socket={props.socket} user={props.user} />
+      <ChatView socket={socket} user={user} />
       <ChatInput
         onKeyPress={(e: React.KeyboardEvent<any>) => onKeyPressed(e)}
         onChange={(e) => setMessage(e.target.value)}
         value={message}
         placeholder="Type..."
+        ref={chatInputEl}
       />
     </div>
-  );
+  )
 }
+
+export default chatBuilder
