@@ -3,7 +3,7 @@ import ChatBuilder from "../../containers/chat_builder/ChatBuilder"
 import ParticipantBuilder from "../../containers/participant_builder/ParticipantBuilder"
 import {User} from "../../models"
 import {socketConnection} from "./services"
-import styles from "./Chat.module.scss"
+import styles from "./Chat.module.css"
 
 interface Props {
   user: User
